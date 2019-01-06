@@ -1,0 +1,4 @@
+application/*.pyc
+application/controllers/*.pyc
+application/controllers/*.pyc
+application/models/*.pyc

@@ -1,4 +1,4 @@
-# !/bin/bash
+#!/usr/bin/env bash
 
 dirname=$1
 
@@ -12,6 +12,8 @@ then
     mkdir -p ./application/static/css
     mkdir -p ./application/static/js
     mkdir -p ./application/templates
+    mkdir -p ./tests
+
     touch manage.py
     touch requirements.txt
     touch ./application/__init__.py

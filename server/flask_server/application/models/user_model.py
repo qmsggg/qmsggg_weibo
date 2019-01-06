@@ -1,34 +1,36 @@
 # -*- coding: utf-8 -*-
 
-from application.extensions import db
+from sqlalchemy import Column, String, Integer, Date
+from application.extensions import Base, session
 from datetime import datetime
 
-__all__ = ['UserInfo']
+__all__ = ['User']
 
-
-class UserInfo(db.Model):
+class User(Base):
     """data model"""
-    __tablename__ = 'userinfo'
+    __tablename__ = 'user'
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.String(255), nullable=False)
-    passwd = db.Column(db.String(255), nullable=False)
-    register_time = db.Column(db.Date, default=datetime.utcnow)
+    id = Column(Integer, primary_key=True)
+    user_name = Column(String(255), nullable=False)
+    passwd = Column(String(255), nullable=False)
+    register_time = Column(Date, default=datetime.utcnow)
 
     def __init__(self, *args, **kwargs):
-        super(UserInfo, self).__init__(*args, **kwargs)
+        super(User, self).__init__(*args, **kwargs)
 
     def __repr__(self):
-        return "<UserInfo '%s'>" % self.user_name
+        return "<User '%s'>" % self.user_name
 
     def store(self):
         """save to database"""
 
-        db.session.add(self)
-        db.session.commit()
+        session.add(self)
+        session.commit()
+        session.close()
 
     def delete(self):
         """delete data"""
 
-        db.session.delete(self)
-        db.session.commit()
+        session.delete(self)
+        session.commit()
+        session.close()

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import flask
-from flask import request, redirect, flash, render_template, url_for
-from application.extensions import db
-from application.models import UserInfo
+from flask import request, redirect, flash, render_template, url_for, jsonify
+from application.extensions import session
+from application.models import User
 
 user_manager_bp = flask.Blueprint(
     'user_manager',
@@ -19,11 +19,13 @@ def user_register():
     if request.method == 'POST':
         user_name = _form["user_name"]
         passwd = _form["passwd"]
-        user = UserInfo(user_name=user_name, passwd=passwd)
+        user = User(user_name=user_name, passwd=passwd)
         try:
             user.store()
             flash("register successfully!")
-            return {user_name}
+            return jsonify({'user_name': user_name, 'success': 0, 'message': "register successfully!"})
         except Exception as e:
             print(e)
             flash("register failed!")
+            return jsonify({'user_name': "", 'success': 1, 'message': "register failed!"})
+    return jsonify({'user_name': "", 'success': 1, 'message': "not support methods!"})

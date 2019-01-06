@@ -11,8 +11,8 @@ app = create_app('default')
 manager = Manager(app)
 migrate = Migrate(app, session)
 
-manager.add_command('runserver', Server(host='127.0.0.1', port=5000))
-manager.add_command('db', MigrateCommand)
+manager.add_command('runserver', Server(host='0.0.0.0', port=5000, debug=True))
+#manager.add_command('db', MigrateCommand)
 
 if __name__ == '__main__':
     manager.run()
